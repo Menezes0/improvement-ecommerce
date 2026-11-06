@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { ZONAS_DEMO } from '@/lib/demo-data';
 import { RegraSubstituicao } from '@/types/database';
+import { ProductImage } from '@/components/ProductImage';
 import { X, Trash2, Plus, Minus, Bike, Store, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -101,23 +102,33 @@ export function CartDrawer() {
                     key={item.produto.id}
                     className="p-3 bg-white border border-gray-200 rounded-xl space-y-2.5 shadow-xs"
                   >
-                    <div className="flex justify-between items-start gap-2">
-                      <div>
-                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                          {item.produto.marca}
-                        </span>
-                        <h4 className="text-xs font-bold text-gray-900 leading-tight">
-                          {item.produto.nome}
-                        </h4>
-                        <div className="text-xs font-extrabold text-emerald-800 mt-0.5">
-                          R$ {item.preco_aplicado.toFixed(2).replace('.', ',')}{' '}
-                          <span className="text-[10px] font-normal text-gray-500">/un</span>
+                    <div className="flex justify-between items-start gap-2.5">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-12 h-12 shrink-0">
+                          <ProductImage
+                            src={item.produto.imagem_url}
+                            alt={item.produto.nome}
+                            categoria={item.produto.categoria_nome}
+                            className="w-12 h-12"
+                          />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                            {item.produto.marca}
+                          </span>
+                          <h4 className="text-xs font-bold text-gray-900 leading-tight">
+                            {item.produto.nome}
+                          </h4>
+                          <div className="text-xs font-extrabold text-emerald-800 mt-0.5">
+                            R$ {item.preco_aplicado.toFixed(2).replace('.', ',')}{' '}
+                            <span className="text-[10px] font-normal text-gray-500">/un</span>
+                          </div>
                         </div>
                       </div>
 
                       <button
                         onClick={() => removerItem(item.produto.id)}
-                        className="text-gray-400 hover:text-rose-600 p-1"
+                        className="text-gray-400 hover:text-rose-600 p-1 shrink-0"
                         title="Remover item do carrinho"
                       >
                         <Trash2 className="w-4 h-4" />

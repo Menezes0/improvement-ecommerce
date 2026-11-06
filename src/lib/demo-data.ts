@@ -61,15 +61,17 @@ export const CATEGORIAS_DEMO: Categoria[] = [
   { id: '11111111-0000-0000-0000-000000000002', nome: 'Padaria e Confeitaria', descricao: 'Pães artesanais, bolos e tortas' },
   { id: '11111111-0000-0000-0000-000000000003', nome: 'Laticínios e Frios', descricao: 'Leites, queijos, iogurtes e manteigas' },
   { id: '11111111-0000-0000-0000-000000000004', nome: 'Mercearia Básica', descricao: 'Arroz, feijão, grãos e massas' },
-  { id: '11111111-0000-0000-0000-000000000005', nome: 'Carnes e Aves', descricao: 'Cortes selecionados' },
+  { id: '11111111-0000-0000-0000-000000000005', nome: 'Carnes e Aves', descricao: 'Cortes selecionados e opções vegetais' },
   { id: '11111111-0000-0000-0000-000000000006', nome: 'Bebidas', descricao: 'Sucos, refrigerantes e chás' },
   { id: '11111111-0000-0000-0000-000000000007', nome: 'Limpeza', descricao: 'Produtos de higiene para o lar' },
-  { id: '11111111-0000-0000-0000-000000000008', nome: 'Higiene Pessoal', descricao: 'Cuidados pessoais' },
+  { id: '11111111-0000-0000-0000-000000000008', nome: 'Higiene Pessoal', descricao: 'Cuidados pessoais, sabonetes e cremes' },
   { id: '11111111-0000-0000-0000-000000000009', nome: 'Dietas e Saudáveis', descricao: 'Sem glúten, sem lactose e veganos' },
 ];
 
 export const PRODUTOS_DEMO: Produto[] = [
-  // Mercearia (CA08: Arroz 5kg com estoque 3)
+  // ==========================================
+  // MERCEARIA BÁSICA
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000001',
     categoria_id: '11111111-0000-0000-0000-000000000004',
@@ -80,11 +82,12 @@ export const PRODUTOS_DEMO: Produto[] = [
     preco: 28.9,
     preco_promocional: 24.9,
     oferta_ativa: true,
-    estoque: 3,
+    estoque: 3, // CA08: estoque 3 para teste
     sem_lactose: true,
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000008',
@@ -99,6 +102,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000004',
@@ -106,7 +110,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     categoria_nome: 'Mercearia Básica',
     nome: 'Café Torrado e Moído 500g',
     marca: 'Três Corações',
-    descricao: 'Aroma marcante e sabor encorpado.',
+    descricao: 'Aroma marcante e sabor encorpado tradicional.',
     preco: 18.9,
     preco_promocional: 15.49,
     oferta_ativa: true,
@@ -115,6 +119,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000006',
@@ -131,6 +136,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000009',
@@ -138,16 +144,224 @@ export const PRODUTOS_DEMO: Produto[] = [
     categoria_nome: 'Mercearia Básica',
     nome: 'Feijão Carioca 1 kg',
     marca: 'Kicaldo',
-    descricao: 'Feijão novo, caldo grosso e saboroso.',
+    descricao: 'Feijão novo, caldo grosso e muito saboroso.',
     preco: 8.5,
     estoque: 50,
     sem_lactose: true,
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1551462147-37885acc36f1?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Laticínios (CA10: Leite Integral 1L de R$ 5,99 por R$ 4,99)
+  // ==========================================
+  // CARNES E AVES (Inclui Sem Lactose, Sem Glúten e Vegano)
+  // ==========================================
+  {
+    id: '33333333-0000-0000-0000-000000000030',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Picanha Bovina Resfriada Peça 1 kg',
+    marca: 'Friboi 1953',
+    descricao: 'Capa de gordura uniforme, maciez incomparável para churrasco.',
+    preco: 69.9,
+    estoque: 15,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000031',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Filé de Peito de Frango Congelado 1 kg',
+    marca: 'Sadia Bio',
+    descricao: 'Cortes selecionados sem osso e sem pele, fonte magra de proteína.',
+    preco: 19.9,
+    estoque: 35,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000032',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Alcatra Bovina em Bifes Macios 1 kg',
+    marca: 'Maturatta',
+    descricao: 'Carne bovina magra e macia para grelhar no dia a dia.',
+    preco: 42.9,
+    estoque: 20,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000033',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Hambúrguer 100% Vegetal Plant-Based 4 un (230g)',
+    marca: 'Fazenda Futuro',
+    descricao: 'Sabor e textura idênticos à carne bovina. 100% à base de plantas, sem glúten e sem lactose.',
+    preco: 21.9,
+    preco_promocional: 18.9,
+    oferta_ativa: true,
+    estoque: 25,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA NA SEÇÃO DE CARNES
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000034',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Carne Moída 100% Vegetal Moído Incrível 270g',
+    marca: 'Incrível Seara',
+    descricao: 'Carne moída vegana rica em fibras e ferro, pronta para molhos e recheios.',
+    preco: 17.9,
+    estoque: 20,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA NA SEÇÃO DE CARNES
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000035',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Linguiça Toscana Artesanal de Pernil 1 kg',
+    marca: 'Aurora Nobre',
+    descricao: 'Tempero clássico suíno sem conservantes artificiais.',
+    preco: 21.9,
+    estoque: 30,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000036',
+    categoria_id: '11111111-0000-0000-0000-000000000005',
+    categoria_nome: 'Carnes e Aves',
+    nome: 'Empanado de Frango Recheado com Requeijão 300g',
+    marca: 'Sadia Crocante',
+    descricao: 'Empanado crocante com queijo cremoso (contém glúten e leite).',
+    preco: 14.5,
+    estoque: 22,
+    sem_lactose: false, // CONTÉM LACTOSE
+    sem_gluten: false,  // CONTÉM GLÚTEN
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=500&q=80',
+  },
+
+  // ==========================================
+  // HIGIENE PESSOAL (Inclui Sem Lactose, Sem Glúten e Vegano)
+  // ==========================================
+  {
+    id: '33333333-0000-0000-0000-000000000040',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Sabonete Puro Vegetal Esfoliante 90g',
+    marca: 'Natura Tododia',
+    descricao: '100% vegetal, sem derivados de animais nem testes em animais. Perfuma e renova a pele.',
+    preco: 5.9,
+    estoque: 60,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1607006311600-314539b78295?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000041',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Shampoo Nutritivo Vegano e Hipoalergênico 350ml',
+    marca: 'Lola Cosmetics',
+    descricao: 'Fórmula 100% botânica sem sulfatos pesados, sem glúten e vegana.',
+    preco: 22.9,
+    estoque: 30,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000042',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Creme Dental Vegano Natural sem Flúor 90g',
+    marca: 'Boni Natural',
+    descricao: 'Com menta e óleo de melaleuca. Não testado em animais, livre de glúten e parabenos.',
+    preco: 11.5,
+    estoque: 45,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1559591937-e10b1a03e1ef?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000043',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Desodorante Roll-On Vegano Cristal 50ml',
+    marca: 'Alva Naturkosmetik',
+    descricao: 'Sem alumínio, sem álcool e certificado vegano.',
+    preco: 16.9,
+    estoque: 35,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: true, // OPÇÃO VEGANA
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000044',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Sabonete em Barra Hidratante com Manteiga e Leite 90g',
+    marca: 'Dove Nutrição',
+    descricao: 'Fórmula hidratante enriquecida com soro de leite integral e aveia.',
+    preco: 4.8,
+    estoque: 70,
+    sem_lactose: false, // CONTÉM DERIVADOS DE LEITE
+    sem_gluten: false,  // CONTÉM AVEIA
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80',
+  },
+  {
+    id: '33333333-0000-0000-0000-000000000045',
+    categoria_id: '11111111-0000-0000-0000-000000000008',
+    categoria_nome: 'Higiene Pessoal',
+    nome: 'Creme Dental Proteção Anticáries Tradicional 90g',
+    marca: 'Colgate Total 12',
+    descricao: 'Cálcio e flúor ativo para proteção diária.',
+    preco: 5.2,
+    estoque: 75,
+    sem_lactose: true,
+    sem_gluten: true,
+    vegano: false,
+    ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1559591937-e10b1a03e1ef?auto=format&fit=crop&w=500&q=80',
+  },
+
+  // ==========================================
+  // LATICÍNIOS E FRIOS
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000002',
     categoria_id: '11111111-0000-0000-0000-000000000003',
@@ -163,6 +377,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: false,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000010',
@@ -177,6 +392,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: false,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000011',
@@ -191,6 +407,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: false,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000012',
@@ -205,9 +422,12 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: false,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Dietas Especiais / Saudáveis (Sem Lactose, Sem Glúten, Vegano)
+  // ==========================================
+  // DIETAS E SAUDÁVEIS
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000013',
     categoria_id: '11111111-0000-0000-0000-000000000009',
@@ -221,6 +441,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000014',
@@ -235,6 +456,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000015',
@@ -249,9 +471,12 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Bebidas
+  // ==========================================
+  // BEBIDAS
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000007',
     categoria_id: '11111111-0000-0000-0000-000000000006',
@@ -267,6 +492,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000016',
@@ -281,9 +507,12 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Limpeza
+  // ==========================================
+  // LIMPEZA
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000005',
     categoria_id: '11111111-0000-0000-0000-000000000007',
@@ -299,6 +528,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000017',
@@ -313,9 +543,12 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Hortifrúti
+  // ==========================================
+  // HORTIFRÚTI
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000018',
     categoria_id: '11111111-0000-0000-0000-000000000001',
@@ -329,6 +562,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000019',
@@ -336,16 +570,19 @@ export const PRODUTOS_DEMO: Produto[] = [
     categoria_nome: 'Hortifrúti',
     nome: 'Tomate Longa Vida 1 kg',
     marca: 'Horta Boa',
-    descricao: 'Tomates vermelhos e firmes.',
+    descricao: 'Tomates vermelhos e firmes selecionados.',
     preco: 7.8,
     estoque: 35,
     sem_lactose: true,
     sem_gluten: true,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=500&q=80',
   },
 
-  // Padaria
+  // ==========================================
+  // PADARIA E CONFEITARIA
+  // ==========================================
   {
     id: '33333333-0000-0000-0000-000000000020',
     categoria_id: '11111111-0000-0000-0000-000000000002',
@@ -359,6 +596,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: false,
     vegano: true,
     ativo: true,
+    imagem_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80',
   },
 ];
 
@@ -416,5 +654,14 @@ export const OFERTAS_DEMO: Oferta[] = [
     fim: new Date(Date.now() + 5 * 86400000).toISOString(),
     ativa: true,
     produto: PRODUTOS_DEMO.find((p) => p.id === '33333333-0000-0000-0000-000000000007'),
+  },
+  {
+    id: '44444444-0000-0000-0000-000000000007',
+    produto_id: '33333333-0000-0000-0000-000000000033', // Burger Vegano (Fazenda Futuro)
+    preco_promocional: 18.9,
+    inicio: new Date(Date.now() - 1 * 86400000).toISOString(),
+    fim: new Date(Date.now() + 5 * 86400000).toISOString(),
+    ativa: true,
+    produto: PRODUTOS_DEMO.find((p) => p.id === '33333333-0000-0000-0000-000000000033'),
   },
 ];

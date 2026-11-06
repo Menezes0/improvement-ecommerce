@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Produto } from '@/types/database';
 import { useCart } from '@/context/CartContext';
+import { ProductImage } from '@/components/ProductImage';
 import { Plus, Check, AlertCircle } from 'lucide-react';
 
 interface ProductCardProps {
@@ -14,7 +15,10 @@ export function ProductCard({ produto }: ProductCardProps) {
   const [adicionado, setAdicionado] = useState(false);
   const [mensagemErro, setMensagemErro] = useState<string | null>(null);
 
-  const temOferta = produto.preco_promocional && produto.preco_promocional > 0 && produto.preco_promocional < produto.preco;
+  const temOferta =
+    produto.preco_promocional &&
+    produto.preco_promocional > 0 &&
+    produto.preco_promocional < produto.preco;
   const precoFinal = temOferta ? produto.preco_promocional! : produto.preco;
   const disponivel = produto.ativo && produto.estoque > 0;
 
@@ -31,18 +35,23 @@ export function ProductCard({ produto }: ProductCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200/80 p-4 flex flex-col justify-between hover:shadow-md transition-shadow relative">
+    <div className="group bg-white rounded-2xl border border-gray-200/80 p-4 flex flex-col justify-between hover:shadow-lg transition-all duration-200 relative">
       {/* Badge de Oferta */}
       {temOferta && (
-        <span className="absolute -top-2.5 left-4 bg-rose-600 text-white font-extrabold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full shadow-sm">
+        <span className="absolute -top-2.5 left-4 z-10 bg-rose-600 text-white font-extrabold text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full shadow-md">
           Oferta Especial
         </span>
       )}
 
       <div>
-        {/* Imagem / Placeholder Ilustrativo */}
-        <div className="w-full h-36 bg-gray-50 rounded-xl flex items-center justify-center text-4xl mb-3 border border-gray-100">
-          🛒
+        {/* Imagem do Produto com Fallback Temático */}
+        <div className="mb-3">
+          <ProductImage
+            src={produto.imagem_url}
+            alt={produto.nome}
+            categoria={produto.categoria_nome}
+            className="w-full h-40"
+          />
         </div>
 
         {/* Tags de Restrição Alimentar (RF05, CA07) */}
@@ -58,25 +67,25 @@ export function ProductCard({ produto }: ProductCardProps) {
             </span>
           )}
           {produto.vegano && (
-            <span className="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-md border border-emerald-200">
-              Vegano
+            <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-md border border-emerald-300">
+              🌱 Vegano
             </span>
           )}
         </div>
 
         {/* Marca */}
-        <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+        <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block">
           {produto.marca}
         </span>
 
         {/* Nome do Produto */}
-        <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mt-0.5">
+        <h3 className="font-bold text-gray-900 text-sm leading-snug line-clamp-2 mt-0.5 group-hover:text-emerald-700 transition-colors">
           {produto.nome}
         </h3>
 
         {/* Descrição */}
         {produto.descricao && (
-          <p className="text-xs text-gray-500 line-clamp-1 mt-1">
+          <p className="text-xs text-gray-500 line-clamp-2 mt-1">
             {produto.descricao}
           </p>
         )}
@@ -99,7 +108,7 @@ export function ProductCard({ produto }: ProductCardProps) {
 
         {/* Preços */}
         <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-lg font-extrabold text-gray-900">
+          <span className="text-xl font-black text-gray-900">
             R$ {precoFinal.toFixed(2).replace('.', ',')}
           </span>
           {temOferta && (
@@ -120,11 +129,11 @@ export function ProductCard({ produto }: ProductCardProps) {
         <button
           onClick={handleAdicionar}
           disabled={!disponivel}
-          className={`w-full py-2 px-3 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition ${
+          className={`w-full py-2.5 px-3 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow-xs ${
             disponivel
               ? adicionado
                 ? 'bg-emerald-600 text-white'
-                : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm'
+                : 'bg-emerald-700 hover:bg-emerald-800 text-white hover:shadow-md'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >
