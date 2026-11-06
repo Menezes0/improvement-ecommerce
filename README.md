@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Improvement e-commerce — Supermercados Porto Velho
 
-## Getting Started
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Menezes0/improvement-ecommerce)
 
-First, run the development server:
+> **Prova de Conceito Acadêmica** desenvolvida para o **IFRO — Campus Porto Velho Calama**  
+> **Autor:** Luiz Carlos de Andrade Mascarenhas Alves da Silva (3º A Informática)  
+> **Stack:** Next.js 15 (App Router), TypeScript, Tailwind CSS, PostgreSQL / Supabase, Supabase Realtime, Zod.
+
+---
+
+## 🎯 Objetivo
+
+O **Improvement e-commerce** é um módulo web desenvolvido para supermercados regionais que operam no modelo híbrido (entrega a domicílio e retirada em loja). Ele resolve os pontos críticos do e-commerce tradicional:
+* **Estoque em tempo real:** Produtos indisponíveis são bloqueados imediatamente nas telas abertas em menos de 3 segundos (sem recarregar).
+* **Regras de substituição:** O cliente escolhe item por item se aceita "Troca de marca" ou "Não substituir" (abatendo do total).
+* **Frete transparente:** Cálculo imediato por bairro antes de finalizar o pedido.
+* **Mural de ofertas:** Adição promocional direta à sacola em 1 clique.
+* **Clique e Retire inteligente:** Aviso automático de aproximação por geolocalização (raio de 1.000m) e botão de chegada na loja.
+
+---
+
+## 🚀 Como Rodar Localmente
 
 ```bash
+# Instalar dependências
+npm install
+
+# Rodar servidor de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👥 Credenciais dos Usuários de Demonstração (RF25, CA33)
 
-## Learn More
+Todos os usuários utilizam a senha padrão: **`Senha@123`**
 
-To learn more about Next.js, take a look at the following resources:
+| Papel | Nome | E-mail | Senha |
+| :--- | :--- | :--- | :--- |
+| **Administrador** | Administrador Geral | `admin@supermercado.com` | `Senha@123` |
+| **Operador** | Luiz Carlos (Operador) | `operador@supermercado.com` | `Senha@123` |
+| **Cliente 1** | Maria da Silva | `maria@exemplo.com` | `Senha@123` |
+| **Cliente 2** | João Santos | `joao@exemplo.com` | `Senha@123` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ☁️ Deploy na Vercel
 
-## Deploy on Vercel
+Clique no botão abaixo para clonar e publicar diretamente na sua conta da Vercel:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Menezes0/improvement-ecommerce)
