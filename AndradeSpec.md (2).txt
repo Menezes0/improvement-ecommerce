@@ -1,0 +1,349 @@
+# Spec Inicial — Improvement e-commerce
+
+| Campo | Valor |
+| --- | --- |
+| **Autor** | Luiz Carlos de Andrade Mascarenhas Alves da Silva |
+| **Instituição / turma** | IFRO — Campus Porto Velho Calama · 3º A Informática |
+| **Atividade** | Spec inicial (Fase 1 da apostila "Programar com IA de forma responsável") |
+| **Versão** | 1.0 — 09/10/2026 |
+| **Natureza do projeto** | Prova de conceito acadêmica, com dados 100% simulados |
+
+> **Aviso.** O sistema é inspirado nos pontos de atrito observados na navegação pública do site de um supermercado regional de Porto Velho (Irmãos Gonçalves). Não tem vínculo, integração nem endosso da empresa, e não usa nenhum dado real de clientes, produtos ou estoque.
+
+---
+
+## 1. Objetivo
+
+O **Improvement e-commerce** é um módulo web para supermercados regionais com e-commerce híbrido (entrega e retirada em loja) que resolve as falhas mais comuns da compra online: estoque que não bate com o catálogo, substituições de produto sem consentimento, frete que só aparece no fim, encartes de oferta sem compra direta e filas no "Clique e Retire". Ele oferece estoque sincronizado em tempo real, regras de substituição escolhidas pelo cliente, frete visível na sacola, mural de ofertas com compra em um clique e aviso automático de chegada por geolocalização. Destina-se ao cliente que compra pelo site e à equipe da loja que separa e entrega os pedidos; nesta versão, o autor atua como "Operador da Loja" e alimenta os dados simulados que fazem o sistema funcionar.
+
+---
+
+## 2. Usuários
+
+| Tipo de usuário | Quem é | Pode | Não pode |
+| --- | --- | --- | --- |
+| **Visitante** | Pessoa sem login. | Consultar o catálogo com busca e filtros (UC04); ver o mural de ofertas (UC05); cadastrar-se (UC01); entrar no sistema (UC02). | Adicionar itens ao carrinho, fazer pedidos, ver pedidos ou acessar qualquer painel. |
+| **Cliente** | Pessoa cadastrada que compra pelo site para entrega ou retirada. | Tudo o que o Visitante pode, já autenticado; gerenciar seus endereços (UC03); adicionar produtos e ofertas ao carrinho e montar o carrinho (UC05, UC06); definir regra de substituição por item (UC07); ver frete e total antes de finalizar (UC08); finalizar pedido (UC09); acompanhar e cancelar os **próprios** pedidos (UC10); avisar que está a caminho da retirada (UC11). | Ver dados ou pedidos de outros clientes; alterar produtos, estoque, ofertas ou status de pedidos; acessar os painéis do Operador e do Administrador. |
+| **Operador da Loja** | Funcionário que mantém estoque e ofertas e separa os pedidos. É o papel assumido pelo autor na demonstração. | Consultar o catálogo (UC04); atender avisos de chegada (UC12); manter produtos e estoque (UC13); manter ofertas (UC14); conduzir pedidos pela fila de status (UC15); separar pedido e tratar ruptura (UC16). | Gerenciar contas de operadores; alterar zonas de entrega, taxas ou configuração do aviso de chegada; comprar como cliente usando a mesma conta. |
+| **Administrador** | Responsável pela configuração do sistema. | Gerenciar operadores (UC17); configurar zonas de entrega, taxas e raio de aviso (UC18); carregar e restaurar os dados simulados (UC19); executar também todas as funções do Operador. | Ver ou recuperar senhas de qualquer usuário — nenhum perfil tem acesso a senhas, que existem apenas como hash. |
+
+---
+
+## 3. Casos de uso principais
+
+| ID | Caso de uso | Ator | RFs relacionados |
+| --- | --- | --- | --- |
+| UC01 | Cadastrar-se no sistema | Visitante | RF01 |
+| UC02 | Entrar e sair do sistema | Visitante, Cliente, Operador, Administrador | RF02, RF03 |
+| UC03 | Gerenciar endereços de entrega | Cliente | RF04 |
+| UC04 | Consultar catálogo com busca, filtros e disponibilidade | Visitante, Cliente, Operador | RF05, RF06 |
+| UC05 | Consultar o mural de ofertas e adicionar ao carrinho em um clique | Visitante (consulta), Cliente (adiciona) | RF07, RF08 |
+| UC06 | Montar o carrinho | Cliente | RF08 |
+| UC07 | Definir a regra de substituição de cada item | Cliente | RF09 |
+| UC08 | Ver frete e total antes de finalizar a compra | Cliente | RF10 |
+| UC09 | Finalizar o pedido (entrega ou retirada) | Cliente | RF11 |
+| UC10 | Acompanhar e cancelar pedidos | Cliente | RF12, RF13 |
+| UC11 | Avisar a aproximação para retirada na loja | Cliente | RF14, RF15, RF16 |
+| UC12 | Atender avisos de chegada no painel | Operador | RF17 |
+| UC13 | Manter produtos e estoque | Operador | RF18, RF19 |
+| UC14 | Manter ofertas | Operador | RF20 |
+| UC15 | Conduzir pedidos pela fila de status | Operador | RF21 |
+| UC16 | Separar pedido e tratar ruptura de item | Operador | RF22 |
+| UC17 | Gerenciar contas de operadores | Administrador | RF23 |
+| UC18 | Configurar zonas de entrega, taxas e raio de aviso | Administrador | RF24 |
+| UC19 | Carregar e restaurar dados simulados | Administrador | RF25 |
+
+### Fluxo de negócio principal (ponta a ponta)
+
+Este é o fluxo completo que grava e consulta dados no banco e que será usado na demonstração:
+
+1. O Cliente se cadastra e entra no sistema (UC01, UC02).
+2. Ele busca produtos, filtra por restrição alimentar e vê a disponibilidade atual (UC04).
+3. Adiciona itens ao carrinho, inclusive pelo mural de ofertas, e escolhe a regra de substituição de cada um (UC05, UC06, UC07).
+4. Vê o frete e o total antes de finalizar e escolhe entrega ou retirada (UC08, UC09).
+5. O sistema valida o estoque, grava o pedido e dá baixa nas quantidades (UC09).
+6. O Operador recebe o pedido na fila, separa os itens e trata eventuais rupturas conforme a regra escolhida (UC15, UC16).
+7. Em caso de retirada, o Cliente avisa que está a caminho e o painel do Operador recebe o alerta de aproximação (UC11, UC12).
+8. O Cliente acompanha cada mudança de status em tempo real até a conclusão (UC10).
+
+---
+
+## 4. Requisitos funcionais (RF)
+
+**Legenda de prioridade:** **Alta** = indispensável para a prova de conceito; **Média** = entra se o prazo permitir, sem comprometer o fluxo principal.
+
+### 4.1 Conta e acesso
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF01 | O Visitante deve poder criar uma conta informando nome, e-mail, telefone e senha (mínimo de 8 caracteres). O e-mail deve ser único e a conta nasce com o papel "cliente". | Alta |
+| RF02 | O sistema deve autenticar o usuário por e-mail e senha e permitir o logout. Em caso de credenciais inválidas, deve exibir mensagem genérica, sem indicar qual dos dois campos está errado. | Alta |
+| RF03 | O sistema deve restringir rotas e ações conforme o papel (cliente, operador, administrador), negando acesso (403 ou redirecionamento) a quem não tem permissão. | Alta |
+| RF04 | O Cliente deve poder cadastrar, editar e remover endereços de entrega, escolhendo o bairro entre os bairros atendidos (zonas de entrega) e marcando um endereço como padrão. | Alta |
+
+### 4.2 Catálogo e ofertas
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF05 | O sistema deve listar produtos ativos com paginação (20 por página), busca por nome e filtros por categoria e por restrição alimentar (sem lactose, sem glúten, vegano). | Alta |
+| RF06 | Cada produto deve exibir sua disponibilidade conforme o estoque. Quando o Operador alterar o estoque, as telas de clientes já abertas devem refletir a mudança em até 3 segundos, sem recarregar a página. Produto indisponível não pode ser adicionado ao carrinho (nem por requisição direta ao servidor). | Alta |
+| RF07 | O sistema deve ter um mural de ofertas, responsivo para celular, listando apenas as ofertas vigentes (produto, preço normal, preço promocional e validade), com botão que adiciona uma unidade ao carrinho em um clique. Se o usuário não estiver logado, deve ser levado ao login e retornar ao mural. | Alta |
+
+### 4.3 Carrinho, frete e pedido
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF08 | O Cliente deve poder adicionar itens, alterar quantidades e remover itens do carrinho. O carrinho é salvo no banco (acessível de outro dispositivo), limita a quantidade ao estoque disponível e recalcula o total usando o preço promocional quando houver oferta vigente. | Alta |
+| RF09 | Para cada item do carrinho, o Cliente deve escolher a regra de substituição: **"Aceito troca de marca"** ou **"Não substituir"** (padrão). A opção **"Remover item"** retira o item do carrinho. A regra escolhida é gravada junto com o item do pedido. | Alta |
+| RF10 | A sacola deve exibir, antes do checkout, o frete calculado pelo bairro do endereço selecionado, o prazo estimado e o total com frete. Para retirada em loja, o frete é R$ 0,00. | Alta |
+| RF11 | Ao finalizar, o Cliente escolhe entrega (com endereço) ou retirada. O sistema revalida o estoque e, em uma única transação, cria o pedido com status "recebido", grava itens, preços, regras, frete e total, dá baixa no estoque e esvazia o carrinho. Se algum item estiver indisponível, o checkout é bloqueado, o item é identificado e nada é gravado. | Alta |
+| RF12 | O Cliente deve ver a lista dos seus pedidos e o detalhe de cada um (status, itens, frete, total). O status deve se atualizar na tela em até 3 segundos, sem recarregar a página. | Alta |
+| RF13 | O Cliente deve poder cancelar um pedido enquanto o status for "recebido". O estoque dos itens deve ser devolvido e o cancelamento registrado. | Média |
+
+### 4.4 Clique e Retire (aviso de chegada)
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF14 | O Cliente com pedido de retirada em status "recebido", "em separação" ou "pronto" deve poder ativar o botão "Estou a caminho". O navegador solicita permissão de geolocalização (consentimento explícito) e a posição só é enviada enquanto o aviso estiver ativo. | Alta |
+| RF15 | O servidor deve calcular a distância entre a posição do Cliente e a loja (fórmula de Haversine). Quando a distância for menor ou igual ao raio configurado (padrão: 1.000 m), deve criar **um único** aviso de "aproximação" por pedido. | Alta |
+| RF16 | Se o Cliente negar a permissão de localização ou preferir, deve poder acionar manualmente o botão "Cheguei", que cria um aviso do tipo "cheguei". | Média |
+| RF17 | O painel do Operador deve exibir, em até 3 segundos e sem recarregar, os avisos de chegada pendentes (pedido, nome do cliente, distância e status do pedido) e permitir marcá-los como "atendido", registrando data, hora e responsável. | Alta |
+
+### 4.5 Painel do Operador
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF18 | O Operador deve poder criar, editar e inativar produtos (nome, marca, categoria, preço, restrições alimentares e estoque inicial). | Alta |
+| RF19 | O Operador deve poder ajustar o estoque (entrada, saída ou ajuste) informando quantidade e motivo. Cada ajuste gera um registro de movimentação com autor, data e hora. | Alta |
+| RF20 | O Operador deve poder criar, editar e encerrar ofertas (produto, preço promocional menor que o preço normal, início e fim). | Alta |
+| RF21 | O Operador deve ver a fila de pedidos por status e avançá-los apenas por transições válidas: recebido → em separação → pronto (retirada) ou saiu para entrega (entrega) → concluído. Transições inválidas devem ser rejeitadas. | Alta |
+| RF22 | Durante a separação, o Operador marca cada item como "separado" ou "indisponível". Se indisponível e a regra do item for "Aceito troca de marca", o Operador escolhe um substituto da mesma categoria e com estoque, e o total é recalculado. Se a regra for "Não substituir", o item é cortado, não é cobrado e o total é recalculado. O Cliente vê o resultado no pedido. | Alta |
+
+### 4.6 Administração e simulação
+
+| ID | Requisito | Prioridade |
+| --- | --- | --- |
+| RF23 | O Administrador deve poder criar contas de operador e ativar ou desativar contas existentes; conta desativada não consegue fazer login. | Média |
+| RF24 | O Administrador deve poder cadastrar e editar as zonas de entrega (bairro, taxa de frete e prazo estimado) e a configuração da loja (coordenadas e raio do aviso de chegada). | Alta |
+| RF25 | O sistema deve ter um script de carga de dados simulados que popule categorias, ao menos 60 produtos fictícios, ao menos 5 ofertas, ao menos 5 bairros de Porto Velho com taxas e 4 usuários de demonstração (1 administrador, 1 operador e 2 clientes). O script deve poder ser executado novamente para restaurar o estado inicial. | Alta |
+
+### 4.7 Fora de escopo desta versão
+
+- Pagamento online (o pagamento é simulado, na entrega ou na retirada).
+- Integração real com ERP, PDV ou qualquer sistema de uma empresa.
+- Rastreamento do entregador e otimização de rotas.
+- Aplicativo móvel nativo (o site é responsivo e funciona no navegador do celular).
+- Emissão de nota fiscal.
+
+---
+
+## 5. Requisitos não funcionais (RNF)
+
+| ID | Categoria | Requisito | Como verificar |
+| --- | --- | --- | --- |
+| RNF01 | Segurança | **A senha nunca é armazenada em texto puro.** Apenas o hash com salt (bcrypt, gerenciado pelo serviço de autenticação) é guardado; a senha também nunca aparece em logs nem em respostas da API. | Inspecionar o banco após um cadastro: só existe hash; nenhum campo legível. |
+| RNF02 | Segurança | **Todo formulário e endpoint é validado no servidor** (tipo, tamanho, formato e faixa de valores), independentemente da validação feita no navegador. Entradas inválidas retornam erro 4xx com mensagem clara. | Enviar requisições diretas (sem passar pela tela) com dados inválidos e conferir a rejeição. |
+| RNF03 | Segurança | A autorização é imposta no servidor e no banco (regras de acesso por linha): o Cliente só lê e altera seus próprios endereços, carrinho e pedidos; ações de Operador e Administrador exigem o papel correspondente. | Tentar, logado como cliente, ler pedido de outro cliente e acessar rotas de painel. |
+| RNF04 | Segurança | O acesso ao banco usa consultas parametrizadas e toda saída é escapada, prevenindo SQL Injection e XSS. | Testar entradas com aspas e `<script>` nos campos de texto. |
+| RNF05 | Segurança | Todo tráfego usa HTTPS. Chaves e segredos ficam em variáveis de ambiente, nunca no repositório, e a chave administrativa do banco nunca é enviada ao navegador. | Revisar o repositório e as requisições de rede do navegador. |
+| RNF06 | Segurança | Sessões usam cookies `httpOnly`, `Secure` e `SameSite=Lax`, com expiração. O login tem limite de tentativas (bloqueio temporário após 5 falhas seguidas). | Conferir os atributos do cookie e simular 6 tentativas erradas. |
+| RNF07 | Privacidade (LGPD) | A localização só é coletada com consentimento explícito e apenas enquanto o aviso "Estou a caminho" estiver ativo. O servidor calcula a distância e **não grava as coordenadas**, apenas a distância; ao concluir ou cancelar o pedido, os dados de localização são descartados. Os dados pessoais coletados se limitam ao necessário (nome, e-mail, telefone, endereço). | Ativar o aviso, concluir o pedido e verificar que nenhuma coordenada ficou gravada. |
+| RNF08 | Desempenho | Catálogo e mural de ofertas carregam em até 2 s (percentil 95) em conexão 4G, usando paginação. | Medição com o Lighthouse e com as ferramentas do navegador. |
+| RNF09 | Desempenho | Mudanças de estoque, de status de pedido e novos avisos de chegada chegam às telas abertas em até 3 s. | Abrir duas sessões e cronometrar a propagação. |
+| RNF10 | Consistência | A baixa de estoque é atômica e o estoque nunca fica negativo. Se dois clientes tentarem comprar a última unidade ao mesmo tempo, apenas um pedido é concluído. | Teste automatizado de concorrência sobre a função de finalização. |
+| RNF11 | Capacidade | O sistema suporta ao menos 50 usuários simultâneos navegando na demonstração. | Teste de carga simples com ferramenta de linha de comando. |
+| RNF12 | Usabilidade | Interface responsiva (mobile-first, a partir de 360 px) nas duas últimas versões de Chrome, Firefox, Edge e Safari, com acessibilidade básica: contraste mínimo de 4,5:1, rótulos em todos os campos e navegação por teclado. | Testes em celular real, no modo responsivo do navegador e com o Lighthouse. |
+| RNF13 | Rastreabilidade | Movimentações de estoque e mudanças de status de pedido são registradas com autor, data e hora. | Consultar os registros após ajustes e avanços de status. |
+
+---
+
+## 6. Modelo de dados (DER simples)
+
+### 6.1 Diagrama
+
+```mermaid
+erDiagram
+    USUARIOS ||--o{ ENDERECOS : possui
+    ZONAS_ENTREGA ||--o{ ENDERECOS : "classifica o bairro"
+    CATEGORIAS ||--o{ PRODUTOS : agrupa
+    PRODUTOS ||--o{ OFERTAS : "recebe"
+    USUARIOS ||--o{ ITENS_CARRINHO : monta
+    PRODUTOS ||--o{ ITENS_CARRINHO : "esta em"
+    USUARIOS ||--o{ PEDIDOS : realiza
+    ENDERECOS |o--o{ PEDIDOS : "entrega em"
+    PEDIDOS ||--|{ ITENS_PEDIDO : contem
+    PRODUTOS ||--o{ ITENS_PEDIDO : "vendido em"
+    PRODUTOS |o--o{ ITENS_PEDIDO : "substitui"
+    PRODUTOS ||--o{ MOVIMENTACOES_ESTOQUE : registra
+    USUARIOS ||--o{ MOVIMENTACOES_ESTOQUE : executa
+    PEDIDOS |o--o{ MOVIMENTACOES_ESTOQUE : origina
+    PEDIDOS ||--o{ AVISOS_CHEGADA : gera
+    USUARIOS |o--o{ AVISOS_CHEGADA : atende
+```
+
+*Leitura:* `||` = exatamente um; `|o` = zero ou um; `o{` = zero ou muitos; `|{` = um ou muitos. A tabela `config_loja` (uma única linha) guarda as coordenadas e o raio de aviso e não tem relacionamento por chave estrangeira.
+
+### 6.2 Tabelas, colunas principais e chaves
+
+| Tabela | Colunas principais | Chaves estrangeiras |
+| --- | --- | --- |
+| `usuarios` | `id` (PK), nome, telefone, papel (`cliente`, `operador` ou `admin`), ativo, criado_em | `id` → `auth.users.id` (credenciais: e-mail e hash da senha ficam no serviço de autenticação) |
+| `enderecos` | `id` (PK), apelido, logradouro, numero, complemento, cep, padrao | `usuario_id` → `usuarios`; `zona_id` → `zonas_entrega` |
+| `zonas_entrega` | `id` (PK), bairro (único), taxa_frete, prazo_estimado_min, ativa | — |
+| `categorias` | `id` (PK), nome (único) | — |
+| `produtos` | `id` (PK), nome, marca, descricao, preco, estoque (CHECK ≥ 0), sem_lactose, sem_gluten, vegano, ativo, atualizado_em | `categoria_id` → `categorias` |
+| `ofertas` | `id` (PK), preco_promocional, inicio, fim, ativa | `produto_id` → `produtos` |
+| `itens_carrinho` | PK composta (`usuario_id`, `produto_id`), quantidade (CHECK > 0), regra_substituicao (`troca_marca` ou `nao_substituir`), adicionado_em | `usuario_id` → `usuarios`; `produto_id` → `produtos` |
+| `pedidos` | `id` (PK), tipo (`entrega` ou `retirada`), status, subtotal, frete, total, a_caminho, ultima_distancia_m, criado_em, atualizado_em | `usuario_id` → `usuarios`; `endereco_id` → `enderecos` (nulo quando é retirada) |
+| `itens_pedido` | `id` (PK), quantidade, preco_unitario, regra_substituicao, situacao (`pendente`, `separado`, `substituido` ou `cortado`) | `pedido_id` → `pedidos`; `produto_id` → `produtos`; `produto_substituto_id` → `produtos` (opcional) |
+| `movimentacoes_estoque` | `id` (PK), tipo (`entrada`, `saida`, `ajuste`, `venda`, `cancelamento`), quantidade, motivo, criado_em | `produto_id` → `produtos`; `usuario_id` → `usuarios`; `pedido_id` → `pedidos` (opcional) |
+| `avisos_chegada` | `id` (PK), tipo (`aproximacao` ou `cheguei`), distancia_m, criado_em, atendido_em | `pedido_id` → `pedidos`; `atendido_por` → `usuarios` (opcional) |
+| `config_loja` | `id` (PK, linha única), nome, latitude, longitude, raio_aviso_m | — |
+
+### 6.3 Como as tabelas sustentam os requisitos
+
+| Requisitos | Tabelas que os sustentam |
+| --- | --- |
+| RF01 a RF03, RF23 | `usuarios` (+ credenciais no serviço de autenticação) |
+| RF04, RF10, RF24 | `enderecos`, `zonas_entrega`, `config_loja` |
+| RF05, RF06, RF18, RF19 | `categorias`, `produtos`, `movimentacoes_estoque` |
+| RF07, RF20 | `ofertas`, `produtos` |
+| RF08, RF09 | `itens_carrinho` |
+| RF11, RF12, RF13, RF21, RF22 | `pedidos`, `itens_pedido`, `movimentacoes_estoque` |
+| RF14 a RF17 | `pedidos` (a_caminho, ultima_distancia_m), `avisos_chegada`, `config_loja` |
+| RF25 | todas (carga inicial) |
+
+### 6.4 Fluxo de status do pedido
+
+| Tipo | Sequência permitida |
+| --- | --- |
+| Retirada | recebido → em separação → pronto → concluído |
+| Entrega | recebido → em separação → saiu para entrega → concluído |
+| Cancelamento | recebido → cancelado (somente pelo Cliente, enquanto o status for "recebido") |
+
+---
+
+## 7. Critérios de aceite
+
+Formato: **Dado que** (contexto), **quando** (ação), **então** (resultado verificável). Os valores são exemplos de dados simulados.
+
+### 7.1 Conta e acesso
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA01 | RF01 | Dado que sou Visitante e o e-mail maria@exemplo.com não está cadastrado, quando envio o cadastro com nome, e-mail, telefone e senha de 8 ou mais caracteres, então a conta é criada com papel "cliente" e passo a estar autenticado. |
+| CA02 | RF01 | Dado que já existe conta com maria@exemplo.com, quando tento cadastrar o mesmo e-mail, então o sistema recusa, informa que o e-mail já está em uso e não cria uma segunda conta. |
+| CA03 | RF02 | Dado que tenho conta, quando informo e-mail e senha corretos, então sou autenticado e levado ao catálogo. |
+| CA04 | RF02 | Dado que tenho conta, quando informo uma senha errada, então vejo "E-mail ou senha inválidos", sem indicação de qual campo está errado, e não sou autenticado. |
+| CA05 | RF03 | Dado que estou autenticado como cliente, quando digito na barra de endereço a URL do painel do Operador, então o acesso é negado (403 ou redirecionamento) e nenhum dado do painel é exibido. |
+| CA06 | RF04 | Dado que sou cliente autenticado, quando cadastro um endereço escolhendo o bairro "Olaria" entre os bairros atendidos, então o endereço aparece na minha lista e pode ser selecionado no checkout. |
+
+### 7.2 Catálogo e ofertas
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA07 | RF05 | Dado que existem produtos marcados como "sem lactose", quando aplico o filtro "sem lactose", então a lista mostra apenas produtos com essa marcação. |
+| CA08 | RF06 | Dado que "Arroz 5 kg" tem 3 unidades em estoque e um cliente está com o catálogo aberto, quando o Operador altera o estoque para 0, então em até 3 segundos, sem recarregar, o produto aparece como "Indisponível" e o botão "Adicionar" fica desabilitado. |
+| CA09 | RF06 | Dado que um produto tem estoque 0, quando uma requisição direta ao servidor tenta adicioná-lo ao carrinho, então o servidor rejeita e o carrinho não muda. |
+| CA10 | RF07 | Dado que existe oferta vigente de "Leite Integral 1 L" por R$ 4,99 (preço normal R$ 5,99), quando abro o mural logado e clico em "Adicionar", então 1 unidade entra no carrinho com preço R$ 4,99, sem passar pela página do produto. |
+| CA11 | RF07 | Dado que uma oferta terminou ontem, quando abro o mural, então essa oferta não aparece. |
+
+### 7.3 Carrinho, frete e pedido
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA12 | RF08 | Dado que um produto tem estoque 5 e tenho 2 unidades no carrinho, quando altero a quantidade para 6, então o sistema recusa, informa o limite de 5 e mantém a quantidade anterior. |
+| CA13 | RF08 | Dado que adicionei itens ao carrinho e saí, quando entro com a mesma conta em outro dispositivo, então o carrinho contém os mesmos itens. |
+| CA14 | RF09 | Dado que adicionei um item sem mexer na regra, quando abro a sacola, então "Não substituir" aparece marcado; e quando troco para "Aceito troca de marca" e finalizo, então essa regra é gravada no item do pedido. |
+| CA15 | RF10 | Dado um carrinho de R$ 100,00 e endereço no bairro "Caiari" com taxa de R$ 8,00, quando abro a sacola, então vejo frete R$ 8,00 e total R$ 108,00 antes do checkout; e quando escolho "Retirada", o frete é R$ 0,00 e o total é R$ 100,00. |
+| CA16 | RF11 | Dado um carrinho com 2 itens disponíveis, quando finalizo com retirada, então é criado um pedido com status "recebido" contendo itens, preços, regras, frete e total; o estoque dos itens diminui; e o carrinho fica vazio. |
+| CA17 | RF11 | Dado que um item do carrinho ficou sem estoque depois de adicionado, quando tento finalizar, então o checkout é bloqueado, o item indisponível é identificado, nenhum pedido é criado e nenhum estoque é alterado. |
+| CA18 | RF12 | Dado que acompanho um pedido "recebido", quando o Operador muda o status para "em separação", então minha tela mostra o novo status em até 3 segundos, sem recarregar. |
+| CA19 | RF13 | Dado um pedido com status "recebido", quando o Cliente o cancela, então o status vira "cancelado" e as quantidades voltam ao estoque; e dado um pedido "em separação", quando tenta cancelar, então o sistema recusa. |
+
+### 7.4 Clique e Retire
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA20 | RF14 | Dado um pedido de retirada "em separação", quando clico em "Estou a caminho", então o navegador pede permissão de localização; se eu permito, o aviso fica ativo; se eu nego, vejo uma mensagem explicando e a opção "Cheguei" continua disponível. |
+| CA21 | RF15 | Dado o raio de 1.000 m e um aviso ativo, quando minha posição passa a 800 m da loja, então é criado exatamente um aviso "aproximação" com a distância; e novas posições dentro do raio não criam outro aviso para o mesmo pedido. |
+| CA22 | RF15 | Dado o raio de 1.000 m e um aviso ativo, quando minha posição está a 3 km da loja, então nenhum aviso de aproximação é criado. |
+| CA23 | RF16 | Dado que neguei a permissão de localização, quando clico em "Cheguei", então um aviso do tipo "cheguei" aparece no painel do Operador. |
+| CA24 | RF17 | Dado que um aviso foi criado, quando o Operador está com o painel aberto, então o aviso aparece em até 3 segundos com número do pedido, nome do cliente, distância e status; e quando ele clica em "Atender", o aviso sai da lista de pendentes e a data, a hora e o responsável são registrados. |
+
+### 7.5 Painel do Operador
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA25 | RF18 | Dado que sou Operador, quando cadastro um produto com nome, categoria, preço e estoque válidos, então ele aparece no catálogo; e quando informo preço negativo, então o servidor rejeita e nada é gravado. |
+| CA26 | RF19 | Dado um produto com estoque 10, quando registro "saída de 3 unidades, motivo: avaria", então o estoque passa a 7 e fica registrada uma movimentação com autor, data, hora, quantidade e motivo. |
+| CA27 | RF20 | Dado que sou Operador, quando crio oferta com preço promocional maior ou igual ao preço normal, então o sistema rejeita; e quando o preço é menor e o período é válido, então a oferta aparece no mural. |
+| CA28 | RF21 | Dado um pedido de retirada "recebido", quando o Operador tenta mudá-lo direto para "concluído", então o sistema rejeita; e quando muda para "em separação", então aceita. |
+| CA29 | RF22 | Dado um item com a regra "Aceito troca de marca" marcado como indisponível, quando o Operador escolhe um substituto da mesma categoria e com estoque, então o item fica "substituído", o total é recalculado e o Cliente vê a troca no pedido. |
+| CA30 | RF22 | Dado um item com a regra "Não substituir" marcado como indisponível, quando o Operador confirma, então o item fica "cortado", não é cobrado, o total é recalculado e o sistema não permite escolher substituto. |
+
+### 7.6 Administração e simulação
+
+| ID | RF | Critério |
+| --- | --- | --- |
+| CA31 | RF23 | Dado que sou Administrador, quando crio um operador, então ele consegue entrar; e quando o desativo, então o login dele é recusado. |
+| CA32 | RF24 | Dado que a taxa do bairro "Olaria" era R$ 6,00, quando o Administrador a altera para R$ 9,00, então um cliente com endereço em Olaria vê frete de R$ 9,00 na sacola, e pedidos já criados mantêm o frete gravado. |
+| CA33 | RF25 | Dado um banco vazio, quando executo o script de carga, então existem ao menos 60 produtos, 5 ofertas, 5 bairros com taxa e os 4 usuários de demonstração, e o login de cada um funciona. |
+
+### 7.7 Critérios transversais (requisitos não funcionais)
+
+| ID | RNF | Critério |
+| --- | --- | --- |
+| CA34 | RNF10 | Dado um produto com 1 unidade em estoque e dois clientes finalizando ao mesmo tempo, quando ambos confirmam, então apenas um pedido é criado, o outro recebe aviso de indisponibilidade e o estoque termina em 0 (nunca negativo). |
+| CA35 | RNF02 | Dado que envio diretamente ao endpoint de cadastro uma senha de 3 caracteres, quando o servidor processa, então responde com erro 4xx e nenhuma conta é criada. |
+| CA36 | RNF01 | Dado que acabei de criar uma conta, quando inspeciono o armazenamento de credenciais, então a senha aparece apenas como hash e nunca em texto legível. |
+| CA37 | RNF07 | Dado um pedido de retirada com aviso ativo, quando o pedido é concluído, então nenhuma coordenada do Cliente está gravada no banco e o aviso deixa de coletar localização. |
+
+---
+
+## 8. Decisão de stack e deploy
+
+### 8.1 Stack escolhida
+
+| Camada | Tecnologia | Papel no projeto |
+| --- | --- | --- |
+| Aplicação (interface e regras de negócio) | **Next.js (App Router) com TypeScript** | Páginas do cliente e dos painéis; regras de negócio em Server Actions e Route Handlers, executadas no servidor. |
+| Estilo | **Tailwind CSS** | Interface responsiva mobile-first. |
+| Banco de dados | **PostgreSQL gerenciado pelo Supabase** | Modelo relacional da seção 6, com regras de acesso por linha (RLS) e transações para a baixa de estoque. |
+| Autenticação | **Supabase Auth** | Cadastro, login e sessão; senha guardada somente como hash bcrypt (RNF01). |
+| Tempo real | **Supabase Realtime** | Propaga mudanças de estoque, status de pedido e avisos de chegada às telas abertas (RF06, RF12, RF17). |
+| Validação | **Zod** | Validação no servidor de todo formulário e endpoint (RNF02). |
+| Geolocalização | **Geolocation API do navegador** + cálculo de Haversine no servidor | Aviso de aproximação (RF14 a RF16). |
+| Testes | **Vitest** (regras de frete, Haversine, transições de status, concorrência de estoque) e **Playwright** (fluxo principal ponta a ponta) | Verificação dos critérios de aceite da seção 7. |
+| Controle de versão | **Git e GitHub**, com migrações do banco em arquivos SQL versionados | Histórico e reprodutibilidade. |
+
+### 8.2 Destino de deploy
+
+- **Aplicação:** Vercel, com deploy automático a cada push na branch `main` e URLs de preview por branch. Região preferencial: São Paulo, para reduzir a latência em Porto Velho.
+- **Banco, autenticação e tempo real:** projeto Supabase de produção (região São Paulo), separado do projeto de desenvolvimento.
+- **Configuração:** chaves e URLs em variáveis de ambiente na Vercel (nunca no repositório); migrações aplicadas antes do primeiro deploy e script de carga (RF25) executado para popular a demonstração.
+
+### 8.3 Por que essa combinação
+
+1. **Compatível com o destino de deploy.** Next.js é suportado nativamente na Vercel, sem servidor próprio para administrar.
+2. **Resolve o tempo real sem servidor persistente.** A Vercel executa o back-end como funções serverless, que não mantêm conexões WebSocket abertas. Delegar o tempo real ao Supabase Realtime elimina esse problema e atende o requisito de 3 segundos (RNF09).
+3. **Banco relacional combina com o problema.** Pedidos, itens, estoque e transações exigem integridade (RNF10); o modelo da seção 6 é naturalmente relacional, e SQL é conhecimento que o autor já possui da disciplina de banco de dados.
+4. **Segurança já embutida onde importa.** Autenticação com hash e RLS no banco reforçam RNF01 e RNF03 sem reinventar mecanismos sensíveis.
+5. **Custo zero para a prova de conceito.** Vercel e Supabase têm planos gratuitos adequados a uma demonstração com dados simulados.
+
+### 8.4 Alternativas consideradas e descartadas
+
+| Alternativa | Motivo do descarte |
+| --- | --- |
+| PHP puro + MySQL (stack já conhecida pelo autor) | A Vercel não executa PHP tradicional; seria preciso outro destino de hospedagem, perdendo o deploy automático e o tempo real simples. |
+| Firebase (NoSQL) | O modelo de pedidos, itens e estoque pede integridade relacional e transações, que ficam menos naturais em NoSQL. |
+| Servidor Node próprio com WebSocket | Exigiria hospedagem com processo persistente (não cabe na Vercel) e mais código de infraestrutura para manter. |
+
+### 8.5 Riscos e mitigações
+
+| Risco | Mitigação |
+| --- | --- |
+| Curva de aprendizado em TypeScript, Next.js e Supabase (o autor tem base em HTML, CSS e banco de dados). | Construir em fatias pequenas, começando pelo fluxo principal (RF de prioridade Alta) e usando a IA como apoio, com revisão do código gerado. |
+| O plano gratuito do Supabase pode pausar projetos inativos. | Acessar o projeto e conferir a carga de dados antes de cada demonstração. |
+| A geolocalização exige HTTPS e dispositivo com GPS ou simulação de posição. | A Vercel já serve HTTPS; para demonstrar sem sair de casa, usar a simulação de localização do navegador, mantendo o botão "Cheguei" (RF16) como alternativa. |
+| Escopo grande para um desenvolvedor individual. | A prioridade (Alta ou Média) na seção 4 define o corte: o que for Média só entra depois de o fluxo principal estar completo e testado. |
