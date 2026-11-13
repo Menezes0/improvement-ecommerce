@@ -4,11 +4,12 @@ import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { Navbar } from '@/components/Navbar';
 import { CartDrawer } from '@/components/CartDrawer';
+import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Improvement e-commerce — Supermercados Porto Velho',
+  title: 'Improvement Supermercados — Seu Supermercado Digital em Porto Velho',
   description:
-    'Módulo web para supermercados regionais com estoque em tempo real, substituições consentidas, frete transparente e Clique e Retire com geolocalização.',
+    'E-commerce completo com estoque em tempo real, ofertas diárias, carnes selecionadas, hortifrúti fresco, filtros sem glúten, sem lactose e vegano.',
 };
 
 export default function RootLayout({
@@ -18,25 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="font-sans antialiased bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+      <body className="font-sans antialiased bg-[#F8FAF7] text-[#17231B] min-h-screen flex flex-col">
         <AuthProvider>
           <CartProvider>
             <Navbar />
             <main className="flex-1">{children}</main>
             <CartDrawer />
-            <footer className="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500">
-              <div className="max-w-7xl mx-auto px-4 space-y-1">
-                <p className="font-semibold text-gray-700">
-                  Improvement e-commerce — Prova de conceito acadêmica
-                </p>
-                <p>
-                  IFRO Campus Porto Velho Calama · Autor: Luiz Carlos de Andrade Mascarenhas Alves da Silva
-                </p>
-                <p className="text-[11px] text-gray-400">
-                  Dados 100% simulados para demonstração e conformidade acadêmica (RNF07).
-                </p>
-              </div>
-            </footer>
+            <Footer />
           </CartProvider>
         </AuthProvider>
       </body>
