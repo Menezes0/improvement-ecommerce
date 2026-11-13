@@ -254,7 +254,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,       // 100% Vegano
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000058',
@@ -579,7 +579,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: false,      // Testado em laboratórios convencionais
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1559591937-e10b1a03e1ef?auto=format&fit=crop&w=500&q=80',
   },
 
   // ==========================================
@@ -615,7 +615,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000009',
@@ -694,7 +694,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: false, // CONTÉM GLÚTEN PURO
     vegano: true,
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=500&q=80',
   },
 
   // ==========================================
@@ -822,7 +822,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000081',
@@ -858,7 +858,7 @@ export const PRODUTOS_DEMO: Produto[] = [
     sem_gluten: true,
     vegano: true,
     ativo: true,
-    imagem_url: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80',
+    imagem_url: 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=500&q=80',
   },
   {
     id: '33333333-0000-0000-0000-000000000016',
