@@ -12,8 +12,14 @@ import {
   Store,
   Navigation,
   MapPin,
+  FileText,
+  Printer,
 } from 'lucide-react';
 import Link from 'next/link';
+import { NotaFiscalModal } from '@/components/admin/NotaFiscalModal';
+import { gerarNotaFiscalDePedido } from '@/lib/admin-data';
+import { PRODUTOS_DEMO } from '@/lib/demo-data';
+import { NotaFiscal } from '@/types/database';
 
 export default function PedidosPage() {
   const { usuario } = useAuth();
@@ -26,6 +32,14 @@ export default function PedidosPage() {
 
   const [geoFeedback, setGeoFeedback] = useState<{ [pedidoId: string]: string }>({});
   const [geoCarregando, setGeoCarregando] = useState<{ [pedidoId: string]: boolean }>({});
+  const [notaSelecionada, setNotaSelecionada] = useState<NotaFiscal | null>(null);
+
+  const handleVisualizarNotaFiscal = (pedido: Pedido) => {
+    // Gerar ou resgatar NF-e simulada
+    const seq = Math.abs(parseInt(pedido.id.replace(/\D/g, '').slice(-4), 10) || 1042);
+    const nf = gerarNotaFiscalDePedido(pedido, PRODUTOS_DEMO, seq);
+    setNotaSelecionada(nf);
+  };
 
   if (!usuario) {
     return (
@@ -270,22 +284,40 @@ export default function PedidosPage() {
                   </div>
                 )}
 
-                {/* Botão de Cancelar Pedido (RF13, CA19) */}
-                {podeCancelar && (
-                  <div className="pt-2 border-t border-gray-100 flex justify-end">
+                {/* Ações do Pedido (Nota Fiscal e Cancelamento) */}
+                <div className="pt-3 border-t border-gray-100 flex flex-wrap items-center justify-between gap-2">
+                  {/* Botões de Nota Fiscal (RF09 / Módulo Fiscal) */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleVisualizarNotaFiscal(pedido)}
+                      className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold py-1.5 px-3 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-emerald-600" />
+                      Visualizar Nota Fiscal (NF-e)
+                    </button>
+                  </div>
+
+                  {/* Botão de Cancelar Pedido (RF13, CA19) */}
+                  {podeCancelar && (
                     <button
                       onClick={() => cancelarPedidoCliente(pedido.id)}
-                      className="text-xs text-rose-600 hover:text-rose-800 font-bold flex items-center gap-1 hover:underline"
+                      className="text-xs text-rose-600 hover:text-rose-800 font-bold flex items-center gap-1 hover:underline cursor-pointer"
                     >
                       <XCircle className="w-3.5 h-3.5" /> Cancelar Pedido (Devolver Estoque - CA19)
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             );
           })}
         </div>
       )}
+
+      {/* Modal de Exibição e Impressão da Nota Fiscal */}
+      <NotaFiscalModal
+        nota={notaSelecionada}
+        onClose={() => setNotaSelecionada(null)}
+      />
     </div>
   );
 }

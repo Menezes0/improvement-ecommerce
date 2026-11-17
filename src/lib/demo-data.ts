@@ -3,6 +3,13 @@ import { Categoria, Produto, Oferta, ZonaEntrega, Usuario, ConfigLoja } from '@/
 export const CONFIG_LOJA_DEMO: ConfigLoja = {
   id: 1,
   nome: 'Improvement Supermercados — Loja Porto Velho',
+  razao_social: 'Improvement Supermercados Ltda',
+  cnpj: '12.345.678/0001-90',
+  inscricao_estadual: '123.456.789',
+  endereco: 'Av. Calama, 4985 - Flodoaldo Pontes Pinto, Porto Velho - RO, 76820-408',
+  telefone: '(69) 3217-1000',
+  email: 'sac@improvementsupermercados.com.br',
+  horario_funcionamento: 'Segunda a Sábado: 07:00 às 22:00 | Domingos e Feriados: 07:00 às 18:00',
   latitude: -8.7618,
   longitude: -63.902,
   raio_aviso_m: 1000,
@@ -57,15 +64,15 @@ export const ZONAS_DEMO: ZonaEntrega[] = [
 ];
 
 export const CATEGORIAS_DEMO: Categoria[] = [
-  { id: '11111111-0000-0000-0000-000000000001', nome: 'Hortifrúti', descricao: 'Frutas, verduras e legumes frescos' },
-  { id: '11111111-0000-0000-0000-000000000002', nome: 'Padaria e Confeitaria', descricao: 'Pães artesanais, bolos e tortas' },
-  { id: '11111111-0000-0000-0000-000000000003', nome: 'Laticínios e Frios', descricao: 'Leites, queijos, iogurtes, manteigas e embutidos' },
-  { id: '11111111-0000-0000-0000-000000000004', nome: 'Mercearia Básica', descricao: 'Arroz, feijão, grãos e massas' },
-  { id: '11111111-0000-0000-0000-000000000005', nome: 'Carnes e Aves', descricao: 'Cortes selecionados e opções vegetais' },
-  { id: '11111111-0000-0000-0000-000000000006', nome: 'Bebidas', descricao: 'Sucos, refrigerantes e chás' },
-  { id: '11111111-0000-0000-0000-000000000007', nome: 'Limpeza', descricao: 'Produtos de higiene para o lar' },
-  { id: '11111111-0000-0000-0000-000000000008', nome: 'Higiene Pessoal', descricao: 'Cuidados pessoais, sabonetes e cremes' },
-  { id: '11111111-0000-0000-0000-000000000009', nome: 'Dietas e Saudáveis', descricao: 'Sem glúten, sem lactose e veganos' },
+  { id: '11111111-0000-0000-0000-000000000001', nome: 'Hortifrúti', descricao: 'Frutas, verduras e legumes frescos', ordem: 1, ativa: true, aliquota_icms: 7, icone_url: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000002', nome: 'Padaria e Confeitaria', descricao: 'Pães artesanais, bolos e tortas', ordem: 2, ativa: true, aliquota_icms: 12, icone_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000003', nome: 'Laticínios e Frios', descricao: 'Leites, queijos, iogurtes, manteigas e embutidos', ordem: 3, ativa: true, aliquota_icms: 12, icone_url: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000004', nome: 'Mercearia Básica', descricao: 'Arroz, feijão, grãos e massas', ordem: 4, ativa: true, aliquota_icms: 7, icone_url: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000005', nome: 'Carnes e Aves', descricao: 'Cortes selecionados e opções vegetais', ordem: 5, ativa: true, aliquota_icms: 12, icone_url: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000006', nome: 'Bebidas', descricao: 'Sucos, refrigerantes e chás', ordem: 6, ativa: true, aliquota_icms: 18, icone_url: 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000007', nome: 'Limpeza', descricao: 'Produtos de higiene para o lar', ordem: 7, ativa: true, aliquota_icms: 18, icone_url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000008', nome: 'Higiene Pessoal', descricao: 'Cuidados pessoais, sabonetes e cremes', ordem: 8, ativa: true, aliquota_icms: 18, icone_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80' },
+  { id: '11111111-0000-0000-0000-000000000009', nome: 'Dietas e Saudáveis', descricao: 'Sem glúten, sem lactose e veganos', ordem: 9, ativa: true, aliquota_icms: 12, icone_url: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80' },
 ];
 
 export const PRODUTOS_DEMO: Produto[] = [
